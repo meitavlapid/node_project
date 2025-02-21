@@ -23,8 +23,10 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/cards", require("./routes/cardRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use((req, res, next) => {
-  res.status(404);
-  next(new Error(`🔍 Not Found - ${req.originalUrl}`));
+  if (req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
 });
 
 app.use((err, req, res, next) => {
@@ -32,7 +34,8 @@ app.use((err, req, res, next) => {
   errorLogger(err, req, res, next); // קרא ל-logger.js
 });
 // MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
