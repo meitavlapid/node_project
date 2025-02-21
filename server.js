@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 //  Middlewares
 app.use(express.json());
 app.use(cors());
-const PORT = process.env.PORT || 10000;
+
 //  Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/cards", require("./routes/cardRoutes"));
@@ -32,7 +32,8 @@ app.use((err, req, res, next) => {
 // MongoDB
 mongoose
   .connect(
-    (process.env.MONGO_URI = {
+    (process.env.MONGO_URI,
+    {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
@@ -41,7 +42,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 //  הפעלת השרת
-
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });
