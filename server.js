@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 //  Middlewares
 app.use(express.json());
 app.use(cors());
-
+const PORT = process.env.PORT || 5000;
 //  Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/cards", require("./routes/cardRoutes"));
@@ -36,7 +36,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 //  הפעלת השרת
-const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://:${PORT}`);
 });
