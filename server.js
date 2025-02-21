@@ -15,7 +15,9 @@ app.use((req, res, next) => {
 //  Middlewares
 app.use(express.json());
 app.use(cors());
-
+app.get("/", (req, res) => {
+  res.send("🚀 Server is running! Welcome to the API.");
+});
 //  Routes
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/cards", require("./routes/cardRoutes"));
